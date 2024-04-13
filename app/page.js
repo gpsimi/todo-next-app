@@ -1,14 +1,57 @@
+"use client"
+import Todo from "@/Components/Todo";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 export default function Home() {
+  
+  const [formData, setFormData] = useState({
+    title:"",
+    description:"",
+  });
+  
+  const onChangeHandler =(e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData(form => ({...form, [name]: value}));
+    console.log (formData)
+  }
+
+const onSubmitHandler = async (e) => {
+  e.preventDefault();
+  try {
+    // api code
+
+
+
+    toast.success('Success')
+  } catch (error) {
+    toast.error('Error ')
+  }
+
+}
+  
   return (
     <>
-      <form className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto">
+
+      <ToastContainer theme="dark"/>
+
+
+      <form 
+        onSubmit={onSubmitHandler}
+        className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto">
         <input
+          value={formData.title}
+          onChange={onChangeHandler}
           type="text"
           name="title"
           placeholder="Enter Title"
           className="px-3 py-2 border-2 w-full"
         />
         <textarea
+          value={formData.description}
+          onChange={onChangeHandler}
           name="description"
           placeholder="Enter Description"
           className="px-3 py-2 border-2 w-full"
@@ -40,42 +83,13 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-00 whitespace-nowrap "
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-            </tr>
-            <tr className="bg-white border-b ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
-              <td className="px-6 py-4">$1999</td>
-            </tr>
-            <tr className="bg-white">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">Black</td>
-              <td className="px-6 py-4">Accessories</td>
-              <td className="px-6 py-4">$99</td>
-            </tr>
+            <Todo />
+            <Todo />
+            <Todo />
           </tbody>
         </table>
       </div>
     </>
   );
 }
+
